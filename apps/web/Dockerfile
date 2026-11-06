@@ -1,10 +1,10 @@
-FROM node:22-alpine AS build
+FROM ghcr.io/pnpm/pnpm:12 AS build
 WORKDIR /app
+
+RUN pnpm runtime set node 26 --global
 
 COPY . /app/
 
-RUN corepack enable
-RUN corepack use pnpm@latest-10
 RUN pnpm fetch && pnpm install --frozen-lockfile --offline --force
 
 RUN ["pnpm", "run", "generate"]
